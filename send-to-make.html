@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sending to Webhook...</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <p>Sending task to Make.com...</p>
+  <script>
+    const webhookURL = "https://hook.us1.make.com/your-webhook-id-here"; // Replace this with your actual webhook
+
+    const params = new URLSearchParams(window.location.search);
+    const task = params.get("task");
+    const due = params.get("due");
+    const priority = params.get("priority") || "medium";
+
+    if (!task || !due) {
+      document.body.innerHTML = "❌ Missing required parameters: task and due are required.";
+    } else {
+      const payload = { task, due, priority };
+
+      fetch(webhookURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        document.body.innerHTML = "✅ Task sent successfully!";
+      })
+      .catch((err) => {
+        document.body.innerHTML = "❌ Error sending task: " + err.message;
+      });
+    }
+  </script>
+</body>
+</html>
