@@ -1,3 +1,5 @@
+<!-- file:///Users/christalwhitt/Developer/send-to-make.html?task=Take+out+trash&due_date=2025-07-19&source=Test -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,12 +12,13 @@
     const webhookURL = "https://hook.us2.make.com/6y7a2ae2vm914q0ccwtdq04zvsc33am8";
     const params = new URLSearchParams(window.location.search);
     const task = params.get("task");
-    const due = params.get("due");
+    const due = params.get("due_date");
+    const source = params.get("source"); 
 
-    if (!task || !due) {
-      document.body.innerHTML = "❌ Missing required parameters: task and due are required.";
+    if (!task) {
+      document.body.innerHTML = "❌ Missing required parameters: task is required.";
     } else {
-      const payload = { task, due };
+      const payload = { task, due, source };
 
       fetch(webhookURL, {
         method: "POST",
